@@ -10,12 +10,12 @@ This project implements optimization of a function that simulates projectile beh
 
 The function simulates the projectile trajectory through an iterative scheme:
 
-v_x^0 = p * cos(theta)
-v_y^0 = -p * sin(theta)
-v_x^{k+1} = v_x^k + omega * dt
-v_y^{k+1} = v_y^k + g * dt
-x^{k+1} = x^k + v_x^{k+1} * s * dt
-y^{k+1} = y^k + v_y^{k+1} * s * dt
+- vx0 = p * cos(theta)
+- vy0 = -p * sin(theta)
+- vx(k+1) = vx(k) + omega * dt
+- vy(k+1) = vy(k) + g * dt
+- x(k+1) = x(k) + vx(k+1) * s * dt
+- y(k+1) = y(k) + vy(k+1) * s * dt
 
 Parameters:
 - p - power
@@ -48,21 +48,24 @@ Note: MADS is implemented as a modern algorithm that works well for box-constrai
 
 ## Project Structure
 
-main.py - Main script
-algorithms.py - Abstract Algorithm class and helper functions
-algorithms_implemented.py - Implementation of all algorithms
-game/game.py - Pygame logic
-game/tank.py - Tank class
-game/terrain.py - FlatTerrain class
-game/hud.py - HUD elements
-game/shot_simulation.py - Projectile simulation + Scaler class
-utils/config.py - System constants
-utils/globals.py - Global variables
-windows/main_menu_window.py - Main window (tkinter)
-windows/sensitivity_window.py - Parameter sensitivity analysis
-windows/comparison_window.py - Algorithm comparison
+- main.py - Main script
+- algorithms.py - Abstract Algorithm class and helper functions
+- algorithms_implemented.py - Implementation of all algorithms
+- game/
+  - game.py - Pygame logic
+  - tank.py - Tank class
+  - terrain.py - FlatTerrain class
+  - hud.py - HUD elements
+  - shot_simulation.py - Projectile simulation + Scaler class
+- utils/
+  - config.py - System constants
+  - globals.py - Global variables
+- windows/
+  - main_menu_window.py - Main window (tkinter)
+  - sensitivity_window.py - Parameter sensitivity analysis
+  - comparison_window.py - Algorithm comparison
 
-## Dependencies
+## Requirements
 
 - Python 3.x
 - pygame
