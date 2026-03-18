@@ -1,8 +1,10 @@
+import inspect
 import time
 from abc import ABC, abstractmethod
 import numpy as np
 
 from utils import globals
+from utils.params_persistence import AlgorithmParamsStore
 from game import simulate_shot, scaler, apply_scenario
 
 _function_call_count = 0
@@ -142,7 +144,29 @@ ALGORITHM_CLASSES = {
 def create_algorithm(algorithm_name, params=None):
     if algorithm_name not in ALGORITHM_CLASSES:
         raise ValueError(f"Nepostojeci algoritam: {algorithm_name}")
+
+    algorithm_class = ALGORITHM_CLASSES[algorithm_name]
+
     if params is None:
-        return ALGORITHM_CLASSES[algorithm_name]()
-    else:
-        return ALGORITHM_CLASSES[algorithm_name](**params)
+        stored_params = AlgorithmParamsStore().get(algorithm_name)
+        if stored_params:
+            filtered = _filter_algorithm_params(algorithm_class, stored_params)
+            return algorithm_class(**filtered)
+
+        return algorithm_class()
+
+    return algorithm_class(**params)
+
+
+def _filter_algorithm_params(algorithm_class, params):
+    signature = inspect.signature(algorithm_class.__init__)
+    filtered = {}
+
+    for name, parameter in signature.parameters.items():
+        if name == "self":
+            continue
+        if name not in params:
+            continue
+        filtered[name] = params.get(name)
+
+    return filtered

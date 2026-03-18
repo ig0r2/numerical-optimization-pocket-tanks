@@ -93,6 +93,7 @@ class MainWindow:
 
         try:
             algorithm_params = self.sim_params_section.collect()
+            self.sim_params_section.persist(algorithm_params)
             result = run_algorithm(self.sim_algorithm_var.get(), params=algorithm_params)
         except ValueError as exc:
             messagebox.showerror("Greska pri unosu", str(exc))
